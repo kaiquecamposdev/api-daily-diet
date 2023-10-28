@@ -1,9 +1,9 @@
 import { config } from 'dotenv'
 import * as z from 'zod'
 
-if(process.env.NODE_ENV === 'test') {
+if (process.env.NODE_ENV === 'test') {
   config({
-    path: '.env.test'
+    path: '.env.test',
   })
 } else {
   config()
@@ -12,12 +12,12 @@ if(process.env.NODE_ENV === 'test') {
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('production'),
   DATABASE_PATH: z.string(),
-  PORT: z.coerce.number().default(8000)
+  PORT: z.coerce.number().default(8000),
 })
 
 const _env = envSchema.safeParse(process.env)
 
-if(_env.success !== true) {
+if (_env.success !== true) {
   console.error('Invalid environment variables!', _env.error.format())
 
   throw new Error('Invalid environment variables.')
