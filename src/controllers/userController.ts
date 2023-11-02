@@ -41,25 +41,4 @@ export async function userController(app: FastifyInstance) {
       userCreated,
     })
   })
-  app.get('/', async (req, res) => {
-    const users = await knex('users').select('*')
-
-    res.send({
-      users,
-    })
-  })
-  app.delete('/:id', async (req, res) => {
-    if (!req.params) throw new AppError('Params is empty!', 400)
-
-    const { id } = req.params as ParamsSchemaType
-    const user = await knex('users').where({ id }).first()
-
-    if (!user) throw new AppError('User not found!', 404)
-
-    await knex('users').where({ id }).delete()
-
-    res.status(200).send({
-      message: 'User removed successfully!',
-    })
-  })
 }
