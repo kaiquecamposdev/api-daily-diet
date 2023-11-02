@@ -23,12 +23,12 @@
 
 - Deve ser possível recuperar as métricas de um usuário:
 
-  - [] Quantidade total de refeições registradas
+  - [x] Quantidade total de refeições registradas
 
-  - [ ] Quantidade total de refeições dentro da dieta
+  - [x] Quantidade total de refeições dentro da dieta
 
-  - [ ] Quantidade total de refeições fora da dieta
+  - [x] Quantidade total de refeições fora da dieta
 
-  - [ ] Melhor sequência de refeições dentro da dieta
+  - [] Melhor sequência de refeições dentro da dieta
 
 - [x] O usuário só pode visualizar, editar e apagar as refeições o qual ele criou

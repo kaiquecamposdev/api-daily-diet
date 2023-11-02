@@ -1,7 +1,8 @@
 import { checkDateTimeWithRegex } from '@/middlewares/check-date-time-with-regex'
 import { checkSessionIdExist } from '@/middlewares/check-session-id-exist'
 import { AppError } from '@/utils/appError'
-import { knexDb } from '@/utils/database'
+import { knex } from '@/utils/database'
+import { returnBetterSequenceWithinDiet } from '@/utils/returnBetterSequenceWithinDiet'
 import { randomUUID } from 'crypto'
 import { FastifyInstance } from 'fastify'
 import { z } from 'zod'
@@ -11,7 +12,7 @@ export const mealsSchema = z.object({
   description: z.string().min(1),
   date: z.string(),
   time: z.string(),
-  withinTheDiet: z.boolean(),
+  withinDiet: z.boolean(),
 })
 const paramsSchema = z.object({
   id: z.string().uuid(),
@@ -20,7 +21,7 @@ const querySchema = z.object({
   totalRegister: z.boolean(),
   totalWithinDiet: z.boolean(),
   totalWithoutDiet: z.boolean(),
-  totalSequenceTheWithinDiet: z.boolean(),
+  betterSequenceWithinDiet: z.boolean(),
 })
 
 type ParamsSchemaType = z.infer<typeof paramsSchema>
@@ -28,70 +29,6 @@ type MealsSchemaType = z.infer<typeof mealsSchema>
 type QuerySchemaType = z.infer<typeof querySchema>
 
 export async function mealsController(app: FastifyInstance) {
-  app.get('/', { preHandler: checkSessionIdExist }, async (req, res) => {
-    if (!req.headers.authorization) throw new AppError('Unathorized!', 401)
-    if (!req.query) throw new AppError('Query is empty!', 400)
-
-    const token = req.headers.authorization as string
-    const tokenSubstring = token.substring('Basic'.length)
-    const tokenDecode = Buffer.from(tokenSubstring, 'base64').toString().trim()
-    const [username] = tokenDecode.split(':')
-    const { session_id } = req.cookies
-    const query = req.query as QuerySchemaType
-
-    const user = await knexDb('users').where({ username }).select('*').first()
-
-    if (!user) throw new AppError('User not found!', 404)
-
-    const meals = await knexDb('meals')
-      .where({
-        user_id: user.id,
-        session_id,
-      })
-      .select('*')
-
-    if (query.totalRegister) {
-      return res.send({
-        id: user.id,
-        username: user.username,
-        total_register_filtered: meals.length,
-      })
-    }
-
-    if (query.totalWithinDiet) {
-      return res.send({
-        id: user.id,
-        username: user.username,
-        total_within_diet: meals.filter((meal) => meal.withinTheDiet === true)
-          .length,
-      })
-    }
-
-    if (!query.totalWithinDiet) {
-      return res.send({
-        id: user.id,
-        username: user.username,
-        total_without_diet: meals.filter((meal) => meal.withinTheDiet === false)
-          .length,
-      })
-    }
-
-    if (query.totalSequenceTheWithinDiet) {
-      return res.send({
-        id: user.id,
-        username: user.username,
-        total_sequence_the_within_diet: meals.filter(
-          (meal) => meal.withinTheDiet === true,
-        ).length,
-      })
-    }
-
-    return res.send({
-      id: user.id,
-      username: user.username,
-      meals,
-    })
-  })
   app.post('/', { preHandler: checkDateTimeWithRegex }, async (req, res) => {
     if (!req.headers.authorization) throw new AppError('Unathorized!', 401)
     if (!req.body) throw new AppError('Body is empty!', 400)
@@ -101,7 +38,7 @@ export async function mealsController(app: FastifyInstance) {
     const tokenDecode = Buffer.from(tokenSubstring, 'base64').toString().trim()
     const [username] = tokenDecode.split(':')
 
-    const { name, description, date, time, withinTheDiet } =
+    const { name, description, date, time, withinDiet } =
       req.body as MealsSchemaType
 
     let session_id = req.cookies.session_id
@@ -114,18 +51,18 @@ export async function mealsController(app: FastifyInstance) {
       })
     }
 
-    const user = await knexDb('users').where({ username }).select().first()
+    const user = await knex('users').where({ username }).select().first()
 
     if (!user) throw new AppError('User not found!', 404)
 
-    await knexDb('meals').insert({
+    await knex('meals').insert({
       id: randomUUID(),
       user_id: user.id,
       name,
       description,
       date,
       time,
-      withinTheDiet,
+      withinDiet,
       created_at: new Date().toISOString(),
       session_id,
     })
@@ -133,6 +70,70 @@ export async function mealsController(app: FastifyInstance) {
     res.status(201).send({
       message: 'Meal created successfully!',
     })
+  })
+  app.get('/', { preHandler: checkSessionIdExist }, async (req, res) => {
+    if (!req.headers.authorization) throw new AppError('Unathorized!', 401)
+    if (!req.query) throw new AppError('Query is empty!', 400)
+
+    const token = req.headers.authorization as string
+    const tokenSubstring = token.substring('Basic'.length)
+    const tokenDecode = Buffer.from(tokenSubstring, 'base64').toString().trim()
+    const [username] = tokenDecode.split(':')
+    const { session_id } = req.cookies
+    const query = req.query as QuerySchemaType
+
+    const user = await knex('users').where({ username }).select('*').first()
+
+    if (!user) throw new AppError('User not found!', 404)
+
+    const meals = await knex('meals')
+      .where({
+        user_id: user.id,
+        session_id,
+      })
+      .select('*')
+
+    if (query.totalRegister) {
+      return res.send({
+        id: user.id,
+        username: user.username,
+        total_register: meals.length,
+        meals,
+      })
+    } else if (query.totalWithinDiet) {
+      return res.send({
+        id: user.id,
+        username: user.username,
+        total_within_diet: meals.filter(
+          (meal) => Boolean(meal.withinDiet) === true,
+        ).length,
+        meals: meals.filter((meal) => Boolean(meal.withinDiet) === true),
+      })
+    } else if (query.totalWithoutDiet) {
+      return res.send({
+        id: user.id,
+        username: user.username,
+        total_without_diet: meals.filter(
+          (meal) => Boolean(meal.withinDiet) === false,
+        ).length,
+        meals: meals.filter((meal) => Boolean(meal.withinDiet) === false),
+      })
+    } else if (query.betterSequenceWithinDiet) {
+      const [sequence, sequenceQuantity] = returnBetterSequenceWithinDiet(meals)
+
+      return res.send({
+        id: user.id,
+        username: user.username,
+        better_sequence_within_diet: sequenceQuantity,
+        meals: sequence,
+      })
+    } else {
+      return res.send({
+        id: user.id,
+        username: user.username,
+        meals,
+      })
+    }
   })
   app.put('/:id', { preHandler: checkDateTimeWithRegex }, async (req, res) => {
     if (!req.headers.authorization) throw new AppError('Unathorized!', 401)
@@ -144,20 +145,20 @@ export async function mealsController(app: FastifyInstance) {
     const tokenDecode = Buffer.from(tokenSubstring, 'base64').toString().trim()
     const [username] = tokenDecode.split(':')
 
-    const user = await knexDb('users').where({ username }).select().first()
+    const user = await knex('users').where({ username }).select().first()
 
     if (!user) throw new AppError('User not found!', 404)
 
     const { id } = req.params as ParamsSchemaType
-    const { name, description, date, time, withinTheDiet } =
+    const { name, description, date, time, withinDiet } =
       req.body as MealsSchemaType
 
-    const mealUpdated = await knexDb('meals')
+    const mealUpdated = await knex('meals')
       .where({ id, user_id: user.id })
       .update({
         name,
         description,
-        withinTheDiet,
+        withinDiet,
         date,
         time,
         updated_at: new Date().toISOString(),
@@ -174,7 +175,7 @@ export async function mealsController(app: FastifyInstance) {
 
     const { id } = req.params as ParamsSchemaType
 
-    const mealDeleted = await knexDb('meals').where({ id }).delete()
+    const mealDeleted = await knex('meals').where({ id }).delete()
 
     if (!mealDeleted) throw new AppError('Meal not found!', 404)
 

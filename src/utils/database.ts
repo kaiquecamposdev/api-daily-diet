@@ -1,5 +1,5 @@
 import { env } from '@/env'
-import knex, { Knex } from 'knex'
+import knexConfig, { Knex } from 'knex'
 
 export const config: Knex.Config = {
   client: 'sqlite',
@@ -11,4 +11,4 @@ export const config: Knex.Config = {
   },
 }
 
-export const knexDb = knex(config)
+export const knex = knexConfig(config)

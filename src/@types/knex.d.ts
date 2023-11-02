@@ -10,8 +10,8 @@ declare module 'knex/types/tables' {
       id: string
       username: string
       password: string
-      created_at: date
-      updated_at: date
+      created_at: string
+      updated_at: string
     }
     meals: {
       id: string
@@ -20,9 +20,9 @@ declare module 'knex/types/tables' {
       description: string
       date: string
       time: string
-      withinTheDiet: boolean
-      created_at: date
-      updated_at: date
+      withinDiet: boolean
+      created_at: string
+      updated_at: string
       session_id: string
     }
   }
