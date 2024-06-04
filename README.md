@@ -1,49 +1,52 @@
-# API Daily Diet 🍴
-Este projeto é uma API backend para gerenciar informações diárias sobre sua dieta. Ele permite que os usuários criem, recuperem, atualizem e excluam refeições, além de gerenciar contas de usuário. A API aplica validação de entrada, lida com autenticação e interage com um banco de dados SQLite. Sua proposta de valor está em fornecer uma plataforma confiável e segura para os usuários rastrearem e gerenciarem suas refeições diárias e seus objetivos dietéticos.
-### Recursos 📦
-- **Gerenciamento de Usuários:**
-    - **Criação de novos usuários:** Permite que novos usuários se registrem na plataforma, definindo um nome de usuário e senha.
-    - **Autenticação de usuários existentes:** Implementa autenticação básica para garantir que apenas usuários autorizados possam acessar os recursos da API.
-- **Gerenciamento de Refeições:**
-    - **Criação de novas refeições:** Permite que os usuários registrem suas refeições, incluindo nome, descrição, data, hora e se a refeição está dentro da dieta. Recuperação de todas as refeições ou de uma refeição específica: Permite aos usuários consultar o histórico de suas refeições, filtrando por data, hora ou status da dieta.
-    - **Atualização de refeições:** Permite que os usuários editem as informações de suas refeições, como nome, descrição, data, hora e status da dieta.
-    - **Exclusão de refeições:** Permite que os usuários removam refeições do histórico.
-    - **Validação de Entrada:** Validação de todos os dados de entrada do usuário: Assegura a integridade dos dados inseridos, evitando erros e garantindo a consistência do banco de dados.
-- **Autenticação:**
-    - **Autenticação básica:** Assegura a segurança das requisições da API, garantindo que apenas usuários autenticados tenham acesso aos recursos.
-- **Persistência de Dados:**
-    - **Banco de dados SQLite:** Armazena os dados de usuários e refeições de forma segura e eficiente.
-### Tecnologias Utilizadas 💻
-- **Node.js:** Ambiente de execução JavaScript para desenvolvimento de aplicações backend.
-- **Fastify:** Framework web leve e rápido para Node.js que facilita a criação de APIs RESTful.
-- **SQLite:** Banco de dados leve e sem servidor, ideal para projetos pequenos e médios.
-- **Vitest:** Framework de teste rápido e versátil para JavaScript, permitindo a criação de testes unitários e de integração.
-- **Zod:** Biblioteca de validação de dados TypeScript, para garantir a segurança e integridade dos dados.
-- **Bcrypt:** Biblioteca para hashing de senhas, garantindo a segurança das credenciais.
-- **JSON Web Token (JWT):**  Para a geração de tokens de autenticação, garantindo a segurança das requisições.
-- **TypeScript:** Linguagem de tipagem estática para JavaScript, adicionando segurança e organização ao código.
-## Instalação 🚀
-1. **Clone o repositório api-daily-diet:**
-```bash
-git clone https://github.com/kaiquecamposdev/api-daily-diet.git
-```
-ou
-```bash
-gh repo clone kaiquecamposdev/api-daily-diet
-```
-2. **Instale as dependências:**
-```bash
-cd api-daily-diet && npm i
-```
+# Daily Diet API 🍴
 
-### Configurando as Variáveis de Ambiente ⚙️ 
+This project is a backend API for managing daily diet information. It allows users to create, retrieve, update, and delete meals, as well as manage user accounts. The API enforces input validation, handles authentication, and interacts with a SQLite database. Its value proposition lies in providing a reliable and secure platform for users to track and manage their daily meals and dietary goals.
 
-1. **Crie os arquivos `.env` e `.env.test`:**
+## Features ✨
 
-   - Crie um arquivo `.env` na raiz do projeto para as variáveis de ambiente do desenvolvimento.
-   - Crie um arquivo `.env.test` na raiz do projeto para as variáveis de ambiente dos testes.
+- **User Management:**
+    - **Creating new users:** Allows new users to register on the platform, setting a username and password.
+    - **Authenticating existing users:** Implements basic authentication to ensure that only authorized users can access API resources.
+- **Meal Management:**
+    - **Creating new meals:** Allows users to log their meals, including name, description, date, time, and whether the meal is within the diet.
+    - **Retrieving all meals or a specific meal:** Allows users to consult their meal history, filtering by date, time, or diet status.
+    - **Updating meals:** Allows users to edit the information of their meals, such as name, description, date, time, and diet status.
+    - **Deleting meals:** Allows users to remove meals from the history.
+- **Input Validation:**
+    - **Validating all user input data:** Ensures the integrity of the data entered, preventing errors and ensuring the consistency of the database.
+- **Authentication:**
+    - **Basic Authentication:** Ensures the security of API requests, ensuring that only authenticated users have access to resources.
+- **Data Persistence:**
+    - **SQLite database:** Stores user and meal data securely and efficiently. 
 
-2. **Defina as variáveis de ambiente:**
+## Installation 🚀
+
+1. **Clone the api-daily-diet repository:**
+
+   ```bash
+   git clone https://github.com/kaiquecamposdev/api-daily-diet
+   ```
+
+   or
+
+   ```bash
+   gh repo clone kaiquecamposdev/api-daily-diet
+   ```
+
+2. **Install the dependencies:**
+
+   ```bash
+   cd api-daily-diet && npm install
+   ```
+
+### Configuring Environment Variables ⚙️ 
+
+1. **Create the `.env` and `.env.test` files:**
+
+   - Create a `.env` file in the project root for development environment variables.
+   - Create a `.env.test` file in the project root for test environment variables.
+
+2. **Set the environment variables:**
 
    - **`.env`:**
 
@@ -60,104 +63,113 @@ cd api-daily-diet && npm i
      DATABASE_PATH=./src/database/db.test.sqlite 
      PORT=3001 
      ```
-### Como começar 🚀
-1. **Executando as migrations:**
+
+### Getting Started 🚀
+
+1. **Running the migrations:**
 ```bash
 npx knex migrate:latest
 ```
-2. **Inicie o servidor de desenvolvimento:**
+2. **Start the development server:**
 ```bash
 npm run dev
 ```
-3. **Acesse em `http://localhost:3000`.** 
-### Testes 🧪
-1. **Executando as migrations**
+3. **Access it at `http://localhost:3000`.** 
+
+### Tests 🧪
+
+1. **Running the migrations**
 ```bash
 npx knex migrate:latest --env test
 ```
-2. **Executando os testes**
+2. **Running the tests**
 ```bash
 npm run test
 ```
+
 ## Endpoints 🔗
 
-### Controlador de Usuários
+### User Controller
 
-- **Criar um usuário:**
+- **Create a user:**
 
   ```
   Endpoint: /api/users
-  Método: POST
+  Method: POST
   Body:  { "username": "User", "password": "User123"  } 
-  Descrição: Cria um novo usuário. O corpo da requisição deve incluir os detalhes do usuário.
+  Description: Creates a new user. The request body must include the user details.
   ```
 
-### Controlador de Refeições
+### Meal Controller
 
-- **Criar uma refeição:**
+- **Create a meal:**
 
   ```
   Endpoint: /api/meals
-  Método: POST
+  Method: POST
   Body:  { "name": "Meal",  "description": "Meal description", "date": "12/12/2023", "time": "00:00:00", "withinDiet": false,  } 
-  Descrição: Cria uma nova refeição. O corpo da requisição deve incluir os detalhes da refeição.
+  Description: Creates a new meal. The request body must include the meal details.
   ```
 
-- **Listar todas as refeições:**
+- **List all meals:**
 
   ```
   Endpoint: /api/meals
-  Método: GET
+  Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
-  Descrição: Retorna uma lista de todas as refeições. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Returns a list of all meals. Must pass the username and password encrypted in base64.
   ```
 
-- **Listar todas as refeições dentro da dieta:**
+- **List all meals within the diet:**
 
   ```
   Endpoint: /api/meals/?totalWithinDiet=true
-  Método: GET
+  Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
-  Descrição: Retorna uma lista de todas as refeições dentro da dieta. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Returns a list of all meals within the diet. Must pass the username and password encrypted in base64.
   ```
 
-- **Listar todas as refeições fora da dieta:**
+- **List all meals outside the diet:**
 
   ```
   Endpoint: /api/meals/?totalWithoutDiet=true
-  Método: GET
+  Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
-  Descrição: Retorna uma lista de todas as refeições fora da dieta. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Returns a list of all meals outside the diet. Must pass the username and password encrypted in base64.
   ```
 
-- **Listar todas as refeições do usuário:**
+- **List all meals of the user:**
 
   ```
   Endpoint: /api/meals/?totalRegister=true
-  Método: GET
+  Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
-  Descrição: Retorna a lista de todas as refeições do usuário. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Returns the list of all meals of the user. Must pass the username and password encrypted in base64.
   ```
 
-- **Atualizar uma refeição específica:**
+- **Update a specific meal:**
 
   ```
   Endpoint: /api/meals/:id
-  Método: PUT
+  Method: PUT
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
   Body:  { "name": "Meal1",  "description": "Meal1 description", "date": "01/01/2024", "time": "00:00:00", "withinDiet": true,  } 
-  Descrição: Atualiza os detalhes de uma refeição específica. O ID da refeição deve ser fornecido na URL e os novos detalhes da refeição devem ser incluídos no corpo da requisição. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Updates the details of a specific meal. The meal ID must be provided in the URL and the new meal details must be included in the request body. Must pass the username and password encrypted in base64.
   ```
 
-- **Excluir uma refeição específica:**
+- **Delete a specific meal:**
 
   ```
   Endpoint: /api/meals/:id
-  Método: DELETE
+  Method: DELETE
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
-  Descrição: Exclui uma refeição específica. O ID da refeição deve ser fornecido na URL. Deve passar o nome de usuário e a senha criptografados em base64.
+  Description: Deletes a specific meal. The meal ID must be provided in the URL. Must pass the username and password encrypted in base64.
   ```
-### Contribuições 🤝
-Contribuições para o projeto são bem-vindas! Sinta-se à vontade para abrir issues ou enviar pull requests.
-### Licença 📝
-Este projeto é licenciado sob a [MIT License](./LICENSE).
+
+### Contributing 🤝
+
+Contributions to the project are welcome! Feel free to open issues or submit pull requests.
+
+### License 📝
+
+This project is licensed under the [MIT License](./LICENSE).
