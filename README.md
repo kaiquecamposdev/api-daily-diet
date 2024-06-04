@@ -22,7 +22,7 @@ Este projeto é uma API backend para gerenciar informações diárias sobre sua 
 - **Bcrypt:** Biblioteca para hashing de senhas, garantindo a segurança das credenciais.
 - **JSON Web Token (JWT):**  Para a geração de tokens de autenticação, garantindo a segurança das requisições.
 - **TypeScript:** Linguagem de tipagem estática para JavaScript, adicionando segurança e organização ao código.
-### Instalação 🚀
+## Instalação 🚀
 1. **Clone o repositório api-daily-diet:**
 ```bash
 git clone https://github.com/kaiquecamposdev/api-daily-diet.git
@@ -35,15 +35,41 @@ gh repo clone kaiquecamposdev/api-daily-diet
 ```bash
 cd api-daily-diet && npm i
 ```
-3. **Executando as migrations:**
+
+### Configurando as Variáveis de Ambiente ⚙️ 
+
+1. **Crie os arquivos `.env` e `.env.test`:**
+
+   - Crie um arquivo `.env` na raiz do projeto para as variáveis de ambiente do desenvolvimento.
+   - Crie um arquivo `.env.test` na raiz do projeto para as variáveis de ambiente dos testes.
+
+2. **Defina as variáveis de ambiente:**
+
+   - **`.env`:**
+
+     ```
+     NODE_ENV=development
+     DATABASE_PATH=./src/database/db.sqlite 
+     PORT=3000 
+     ```
+
+   - **`.env.test`:**
+
+     ```
+     NODE_ENV=test
+     DATABASE_PATH=./src/database/db.test.sqlite 
+     PORT=3001 
+     ```
+### Como começar 🚀
+1. **Executando as migrations:**
 ```bash
 npx knex migrate:latest
 ```
-4. **Inicie o servidor de desenvolvimento:**
+2. **Inicie o servidor de desenvolvimento:**
 ```bash
 npm run dev
 ```
-4. **Acesse em `http://localhost:`.** 
+3. **Acesse em `http://localhost:3000`.** 
 ### Testes 🧪
 1. **Executando as migrations**
 ```bash
