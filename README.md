@@ -1,4 +1,4 @@
-# API Daily Diet 🍲
+# API Daily Diet 🍴
 Este projeto é uma API backend para gerenciar informações diárias sobre sua dieta. Ele permite que os usuários criem, recuperem, atualizem e excluam refeições, além de gerenciar contas de usuário. A API aplica validação de entrada, lida com autenticação e interage com um banco de dados SQLite. Sua proposta de valor está em fornecer uma plataforma confiável e segura para os usuários rastrearem e gerenciarem suas refeições diárias e seus objetivos dietéticos.
 ### Recursos 📦
 - **Gerenciamento de Usuários:**
