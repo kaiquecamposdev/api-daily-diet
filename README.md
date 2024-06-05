@@ -89,7 +89,7 @@ npm run test
 
 ## 🔗 Endpoints 
 
-### User Controller
+### 👤 User Controller
 
 - **Create a user:**
 
@@ -100,7 +100,7 @@ npm run test
   Description: Creates a new user. The request body must include the user details.
   ```
 
-### Meal Controller
+### 🍽️ Meal Controller
 
 - **Create a meal:**
 
