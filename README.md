@@ -2,7 +2,7 @@
 
 This project is a backend API for managing daily diet information. It allows users to create, retrieve, update, and delete meals, as well as manage user accounts. The API enforces input validation, handles authentication, and interacts with a SQLite database. Its value proposition lies in providing a reliable and secure platform for users to track and manage their daily meals and dietary goals.
 
-## 📦 Features
+## ✨ Features
 
 - **User Management:**
     - **Creating new users:** Allows new users to register on the platform, setting a username and password.
