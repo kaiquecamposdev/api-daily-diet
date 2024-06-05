@@ -93,7 +93,7 @@ npm run test
 
 - **Create a user:**
 
-  ```
+  ```bash
   Endpoint: /api/users
   Method: POST
   Body:  { "username": "User", "password": "User123"  } 
@@ -104,7 +104,7 @@ npm run test
 
 - **Create a meal:**
 
-  ```
+  ```bash
   Endpoint: /api/meals
   Method: POST
   Body:  { "name": "Meal",  "description": "Meal description", "date": "12/12/2023", "time": "00:00:00", "withinDiet": false,  } 
@@ -113,7 +113,7 @@ npm run test
 
 - **List all meals:**
 
-  ```
+  ```bash
   Endpoint: /api/meals
   Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
@@ -122,7 +122,7 @@ npm run test
 
 - **List all meals within the diet:**
 
-  ```
+  ```bash
   Endpoint: /api/meals/?totalWithinDiet=true
   Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
@@ -131,7 +131,7 @@ npm run test
 
 - **List all meals outside the diet:**
 
-  ```
+  ```bash
   Endpoint: /api/meals/?totalWithoutDiet=true
   Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
@@ -140,7 +140,7 @@ npm run test
 
 - **List all meals of the user:**
 
-  ```
+  ```bash
   Endpoint: /api/meals/?totalRegister=true
   Method: GET
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
@@ -149,7 +149,7 @@ npm run test
 
 - **Update a specific meal:**
 
-  ```
+  ```bash
   Endpoint: /api/meals/:id
   Method: PUT
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
@@ -159,7 +159,7 @@ npm run test
 
 - **Delete a specific meal:**
 
-  ```
+  ```bash
   Endpoint: /api/meals/:id
   Method: DELETE
   Header:  { 'Authorization': 'Basic ' + encodedCredentials  }
