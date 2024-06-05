@@ -2,7 +2,7 @@
 
 This project is a backend API for managing daily diet information. It allows users to create, retrieve, update, and delete meals, as well as manage user accounts. The API enforces input validation, handles authentication, and interacts with a SQLite database. Its value proposition lies in providing a reliable and secure platform for users to track and manage their daily meals and dietary goals.
 
-## Features ✨
+## 📦 Features
 
 - **User Management:**
     - **Creating new users:** Allows new users to register on the platform, setting a username and password.
@@ -19,7 +19,7 @@ This project is a backend API for managing daily diet information. It allows use
 - **Data Persistence:**
     - **SQLite database:** Stores user and meal data securely and efficiently. 
 
-## Installation 🚀
+## 🚀 Installation
 
 1. **Clone the api-daily-diet repository:**
 
@@ -39,7 +39,7 @@ This project is a backend API for managing daily diet information. It allows use
    cd api-daily-diet && npm install
    ```
 
-### Configuring Environment Variables ⚙️ 
+## ⚙️ Environment Variables 
 
 1. **Create the `.env` and `.env.test` files:**
 
@@ -64,7 +64,7 @@ This project is a backend API for managing daily diet information. It allows use
      PORT=3001 
      ```
 
-### Getting Started 🚀
+## 🚀 Getting Started
 
 1. **Running the migrations:**
 ```bash
@@ -76,7 +76,7 @@ npm run dev
 ```
 3. **Access it at `http://localhost:3000`.** 
 
-### Tests 🧪
+## 🧪 Tests 
 
 1. **Running the migrations**
 ```bash
@@ -87,7 +87,7 @@ npx knex migrate:latest --env test
 npm run test
 ```
 
-## Endpoints 🔗
+## 🔗 Endpoints 
 
 ### User Controller
 
@@ -166,10 +166,10 @@ npm run test
   Description: Deletes a specific meal. The meal ID must be provided in the URL. Must pass the username and password encrypted in base64.
   ```
 
-### Contributing 🤝
+## 🤝 Contributing 
 
 Contributions to the project are welcome! Feel free to open issues or submit pull requests.
 
-### License 📝
+## 📝 License
 
 This project is licensed under the [MIT License](./LICENSE).
